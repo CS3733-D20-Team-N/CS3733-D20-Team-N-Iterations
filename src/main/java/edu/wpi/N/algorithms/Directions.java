@@ -13,7 +13,7 @@ public class Directions {
   private ArrayList<String> directions;
   private static LinkedList<DbNode> path;
   private static State state;
-  private static final double TURN_THRESHOLD = 30;
+  private static final double TURN_THRESHOLD = 25;
 
   enum State {
     STARTING,
@@ -152,14 +152,14 @@ public class Directions {
     } else if (i == path.size() - 1) {
       return ARRIVING;
     } else if (Math.abs(getAngle(i) - getAngle(i - 1)) >= TURN_THRESHOLD) {
-      // System.out.println(Math.abs(getAngle(i) - getAngle(i - 1)));
+      System.out.println(Math.abs(getAngle(i) - getAngle(i - 1)));
       return TURNING;
     } else if (path.get(i).getFloor() != path.get(i + 1).getFloor()) {
       return CHANGING_FLOOR;
     } else if (!path.get(i).getBuilding().equals(path.get(i + 1).getBuilding())) {
       return EXITING;
     } else {
-      // System.out.println(Math.abs(getAngle(i) - getAngle(i - 1)));
+      System.out.println(Math.abs(getAngle(i) - getAngle(i - 1)));
       return CONTINUING;
     }
   }
@@ -309,7 +309,11 @@ public class Directions {
    * @return ArrayList<String>, each String is a line of directions
    */
   public ArrayList<String> getDirections() throws DBException {
-    this.generateDirections();
-    return this.directions;
+    if (!(this.path == null)) {
+      this.generateDirections();
+      return this.directions;
+    } else {
+      return null;
+    }
   }
 }

@@ -22,9 +22,9 @@ public class DirectionsTest {
     DbController.initDB();
     DbController.clearNodes();
     InputStream inputNodes =
-        PathfinderMethodsTest.class.getResourceAsStream("../csv/TeamNnodes_T.csv");
+        PathfinderMethodsTest.class.getResourceAsStream("../csv/TeamNFloor4Nodes.csv");
     InputStream inputEdges =
-        PathfinderMethodsTest.class.getResourceAsStream("../csv/TeamNedges_T.csv");
+        PathfinderMethodsTest.class.getResourceAsStream("../csv/TeamNFloor4Edges.csv");
     CSVParser.parseCSV(inputNodes);
     CSVParser.parseCSV(inputEdges);
   }
@@ -134,6 +134,23 @@ public class DirectionsTest {
     ArrayList<String> directions = path.getDirections();
     for (String s : directions) {
       // System.out.println(s);
+    }
+    Assertions.assertEquals(directions, path.getDirections());
+  }
+
+  /**
+   * Directions for path from Rheumatology Center to Pulmonary Services Pulmonary services not Works
+   * (2.5/5), doesn't detect turn into Pulmonary unless turn threshold is 20 deg Best solution is
+   * probably to just move that hallway node closer to Pulmonary
+   *
+   * @throws DBException
+   */
+  @Test
+  public void directionsTester8() throws DBException {
+    Path path = Pathfinder.findPath("NDEPT01104", "NDEPT00404");
+    ArrayList<String> directions = path.getDirections();
+    for (String s : directions) {
+      System.out.println(s);
     }
     Assertions.assertEquals(directions, path.getDirections());
   }
