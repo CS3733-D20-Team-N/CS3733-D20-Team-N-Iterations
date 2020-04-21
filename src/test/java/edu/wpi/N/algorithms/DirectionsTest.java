@@ -22,9 +22,9 @@ public class DirectionsTest {
     DbController.initDB();
     DbController.clearNodes();
     InputStream inputNodes =
-        PathfinderMethodsTest.class.getResourceAsStream("../csv/TeamNFloor4Nodes.csv");
+        PathfinderMethodsTest.class.getResourceAsStream("../csv/UPDATEDTeamNnodes.csv");
     InputStream inputEdges =
-        PathfinderMethodsTest.class.getResourceAsStream("../csv/TeamNFloor4Edges.csv");
+        PathfinderMethodsTest.class.getResourceAsStream("../csv/UPDATEDTeamNedges.csv");
     CSVParser.parseCSV(inputNodes);
     CSVParser.parseCSV(inputEdges);
   }
@@ -85,7 +85,7 @@ public class DirectionsTest {
     Path path = Pathfinder.findPath("NDEPT01304", "NHALL02204");
     ArrayList<String> directions = path.getDirections();
     for (String s : directions) {
-      // System.out.println(s);
+      System.out.println(s);
     }
     Assertions.assertEquals(directions, path.getDirections());
   }

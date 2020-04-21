@@ -49,9 +49,7 @@ public class DirectionsGenerator {
       switch (state) {
         case STARTING:
           if (!path.getFirst().getNodeType().equals("HALL")) {
-            message =
-                "Start by exiting "
-                    + path.getFirst().getLongName(); // sometimes this produces an extra space
+            message = "Start by exiting " + path.getFirst().getLongName();
           } else if (!(getLandmark(nextNode) == null)) {
             message =
                 "Start towards "
@@ -76,20 +74,22 @@ public class DirectionsGenerator {
               directions.add(message + " and proceed down the hallway");
             }
             message = "";
-          } else if (stateChange || atIntersection(currNode)) {
+          } else if (stateChange || atIntersection(nextNode)) {
             if (getLandmark(nextNode) == null) {
-              message = "Continue to next corridor " + getDistanceString(distance);
+              message = "Continue to next intersection " + getDistanceString(distance);
             } else if (getLandmark(nextNode).equals(nextNode)) {
               message =
                   "Proceed straight towards "
                       + getLandmark(nextNode).getLongName()
+                      + " "
                       + getDistanceString(distance);
             } else if (atEndOfHall(nextNode)) {
               message = "Continue to the end of the hallway" + getDistanceString(distance);
             } else {
               message =
                   "Continue past "
-                      + getLandmark(currNode).getLongName()
+                      + getLandmark(nextNode).getLongName()
+                      + " "
                       + getDistanceString(distance);
             }
             distance = 0;
@@ -98,24 +98,25 @@ public class DirectionsGenerator {
         case TURNING:
           if (!message.equals("")) {
             if (i == 1) {
-              directions.add(message + "and turning " + getTurnType(angle, getAngle(i - 1)));
+              directions.add(message + " and turning " + getTurnType(angle, getAngle(i - 1)));
             } else {
-              directions.add(message + "and take the next " + getTurnType(angle, getAngle(i - 1)));
+              directions.add(message + " and take the next " + getTurnType(angle, getAngle(i - 1)));
             }
             message = "";
           } else if (!(getLandmark(currNode) == null)) {
             directions.add(
                 "Go straight towards "
                     + getLandmark(currNode).getLongName()
+                    + " "
                     + getDistanceString(getDistance(currNode, nextNode))
-                    + "and turn "
+                    + " and turn "
                     + getTurnType(angle, getAngle(i - 1))
                     + " at the next corridor");
           } else {
             directions.add(
                 "Proceed to next corridor"
                     + getDistanceString(getDistance(currNode, nextNode))
-                    + "and turn "
+                    + " and turn "
                     + getTurnType(angle, getAngle(i - 1)));
           }
           break;
@@ -129,7 +130,7 @@ public class DirectionsGenerator {
             String turnMessage = "Turn " + getTurnType(angle, getAngle(i - 2));
             directions.add(turnMessage + " and arrive at " + currNode.getLongName());
           } else if (!message.equals("")) {
-            directions.add(message + "and arrive at destination");
+            directions.add(message + " and arrive at destination");
           } else {
             directions.add("Arrive at destination");
           }
@@ -149,14 +150,14 @@ public class DirectionsGenerator {
     } else if (i == path.size() - 1) {
       return ARRIVING;
     } else if (Math.abs(getAngle(i) - getAngle(i - 1)) >= TURN_THRESHOLD) {
-      System.out.println(Math.abs(getAngle(i) - getAngle(i - 1)));
+      // System.out.println(Math.abs(getAngle(i) - getAngle(i - 1)));
       return TURNING;
     } else if (path.get(i).getFloor() != path.get(i + 1).getFloor()) {
       return CHANGING_FLOOR;
     } else if (!path.get(i).getBuilding().equals(path.get(i + 1).getBuilding())) {
       return EXITING;
     } else {
-      System.out.println(Math.abs(getAngle(i) - getAngle(i - 1)));
+      // System.out.println(Math.abs(getAngle(i) - getAngle(i - 1)));
       return CONTINUING;
     }
   }
