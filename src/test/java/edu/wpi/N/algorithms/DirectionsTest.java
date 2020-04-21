@@ -85,7 +85,7 @@ public class DirectionsTest {
     Path path = Pathfinder.findPath("NDEPT01304", "NHALL02204");
     ArrayList<String> directions = path.getDirections();
     for (String s : directions) {
-      System.out.println(s);
+      // System.out.println(s);
     }
     Assertions.assertEquals(directions, path.getDirections());
   }
@@ -116,7 +116,7 @@ public class DirectionsTest {
     Path path = Pathfinder.findPath("NREST00204", "NDEPT02104");
     ArrayList<String> directions = path.getDirections();
     for (String s : directions) {
-      System.out.println(s);
+      // System.out.println(s);
     }
     Assertions.assertEquals(directions, path.getDirections());
   }
