@@ -1,6 +1,6 @@
 package edu.wpi.N.algorithms;
 
-import static edu.wpi.N.algorithms.Directions.State.*;
+import static edu.wpi.N.algorithms.DirectionsGenerator.State.*;
 import static java.lang.Math.atan2;
 
 import edu.wpi.N.database.DBException;
@@ -9,7 +9,7 @@ import edu.wpi.N.entities.DbNode;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Directions {
+public class DirectionsGenerator {
   private ArrayList<String> directions;
   private static LinkedList<DbNode> path;
   private static State state;
@@ -24,7 +24,7 @@ public class Directions {
     ARRIVING
   }
 
-  public Directions(LinkedList<DbNode> path) {
+  public DirectionsGenerator(LinkedList<DbNode> path) {
     this.directions = new ArrayList<>();
     this.path = path;
   }
@@ -51,16 +51,16 @@ public class Directions {
           if (!path.getFirst().getNodeType().equals("HALL")) {
             message =
                 "Start by exiting "
-                    + path.getFirst().getLongName()
-                    + " "; // sometimes this produces an extra space
+                    + path.getFirst().getLongName(); // sometimes this produces an extra space
           } else if (!(getLandmark(nextNode) == null)) {
             message =
                 "Start towards "
                     + getLandmark(nextNode).getLongName()
+                    + " "
                     + getDistanceString(getDistance(currNode, nextNode));
           } else {
             message =
-                "Start by proceeding down the corridor"
+                "Start by proceeding down the corridor "
                     + getDistanceString(getDistance(currNode, nextNode));
           }
           break;
@@ -71,14 +71,14 @@ public class Directions {
           distance += getDistance(currNode, nextNode);
           if (!message.equals("")) {
             if (atEndOfHall(nextNode)) {
-              directions.add(message + "and proceed to the end of the hallway");
+              directions.add(message + " and proceed to the end of the hallway");
             } else {
-              directions.add(message + "and proceed down the hallway");
+              directions.add(message + " and proceed down the hallway");
             }
             message = "";
           } else if (stateChange || atIntersection(currNode)) {
             if (getLandmark(nextNode) == null) {
-              message = "Continue to next corridor" + getDistanceString(distance);
+              message = "Continue to next corridor " + getDistanceString(distance);
             } else if (getLandmark(nextNode).equals(nextNode)) {
               message =
                   "Proceed straight towards "
@@ -212,7 +212,7 @@ public class Directions {
    * @return String, how far in feet between nodes
    */
   private static String getDistanceString(double distance) {
-    return " (Go " + Math.round(distance) + " ft) ";
+    return "(Go " + Math.round(distance) + " ft)";
   }
 
   /**
@@ -300,6 +300,21 @@ public class Directions {
     return false;
   }
 
+  /** @return directions with numbers at beginning of each line */
+  private ArrayList<String> getNumberedDirection() {
+    ArrayList<String> newDirections = new ArrayList<String>();
+    int index = 1;
+    if (!this.directions.isEmpty()) {
+      for (String s : this.directions) {
+        newDirections.add(index + ": " + s);
+        index++;
+      }
+    } else {
+      return null;
+    }
+    return newDirections;
+  }
+
   /**
    * Takes a path and returns written directions for that path
    *
@@ -308,7 +323,7 @@ public class Directions {
   public ArrayList<String> getDirections() throws DBException {
     if (!(this.path == null)) {
       this.generateDirections();
-      return this.directions;
+      return this.getNumberedDirection();
     } else {
       return null;
     }

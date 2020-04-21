@@ -1,6 +1,6 @@
 package edu.wpi.N.entities;
 
-import edu.wpi.N.algorithms.Directions;
+import edu.wpi.N.algorithms.DirectionsGenerator;
 import edu.wpi.N.database.DBException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,7 +22,7 @@ public class Path {
   }
 
   public ArrayList<String> getDirections() throws DBException {
-    Directions dir = new Directions(this.path);
+    DirectionsGenerator dir = new DirectionsGenerator(this.path);
     this.directions = dir.getDirections();
     return this.directions;
   }
