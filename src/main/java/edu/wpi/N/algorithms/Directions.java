@@ -96,30 +96,27 @@ public class Directions {
           }
           break;
         case TURNING:
-          if (!nextNode.equals(path.get(path.size() - 1))) {
-            if (!message.equals("")) {
-              if (i == 1) {
-                directions.add(message + "and turning " + getTurnType(angle, getAngle(i - 1)));
-              } else {
-                directions.add(
-                    message + "and take the next " + getTurnType(angle, getAngle(i - 1)));
-              }
-              message = "";
-            } else if (!(getLandmark(currNode) == null)) {
-              directions.add(
-                  "Go straight towards "
-                      + getLandmark(currNode).getLongName()
-                      + getDistanceString(getDistance(currNode, nextNode))
-                      + "and turn "
-                      + getTurnType(angle, getAngle(i - 1))
-                      + " at the next corridor");
+          if (!message.equals("")) {
+            if (i == 1) {
+              directions.add(message + "and turning " + getTurnType(angle, getAngle(i - 1)));
             } else {
-              directions.add(
-                  "Proceed to next corridor"
-                      + getDistanceString(getDistance(currNode, nextNode))
-                      + "and turn "
-                      + getTurnType(angle, getAngle(i - 1)));
+              directions.add(message + "and take the next " + getTurnType(angle, getAngle(i - 1)));
             }
+            message = "";
+          } else if (!(getLandmark(currNode) == null)) {
+            directions.add(
+                "Go straight towards "
+                    + getLandmark(currNode).getLongName()
+                    + getDistanceString(getDistance(currNode, nextNode))
+                    + "and turn "
+                    + getTurnType(angle, getAngle(i - 1))
+                    + " at the next corridor");
+          } else {
+            directions.add(
+                "Proceed to next corridor"
+                    + getDistanceString(getDistance(currNode, nextNode))
+                    + "and turn "
+                    + getTurnType(angle, getAngle(i - 1)));
           }
           break;
         case CHANGING_FLOOR: // not implemented yet
@@ -257,7 +254,7 @@ public class Directions {
         Math.sqrt(
             Math.pow(nextNode.getX() - currNode.getX(), 2)
                 + Math.pow(nextNode.getY() - currNode.getY(), 2));
-    double conversion = 1;
+    double conversion = 1 / 4.14; // 4.14 pixels per ft
     return distance * conversion;
   }
 
