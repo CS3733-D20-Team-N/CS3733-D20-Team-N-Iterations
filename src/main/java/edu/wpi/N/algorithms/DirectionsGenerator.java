@@ -80,7 +80,7 @@ public class DirectionsGenerator {
             } else if (getLandmark(nextNode).equals(nextNode)) {
               message =
                   "Proceed straight towards "
-                      + getLandmark(nextNode).getLongName()
+                      + getLandmark(currNode).getLongName()
                       + " "
                       + getDistanceString(distance);
             } else if (atEndOfHall(nextNode)) {
@@ -96,28 +96,30 @@ public class DirectionsGenerator {
           }
           break;
         case TURNING:
-          if (!message.equals("")) {
-            if (i == 1) {
-              directions.add(message + " and turning " + getTurnType(angle, getAngle(i - 1)));
+          if (!nextNode.equals(path.get(path.size() - 1))) {
+            if (!message.equals("")) {
+              if (i == 1) {
+                directions.add(message + " and turning " + getTurnType(angle, getAngle(i - 1)));
+              } else {
+                directions.add(message + " and turn " + getTurnType(angle, getAngle(i - 1)));
+              }
+              message = "";
+            } else if (!(getLandmark(currNode) == null)) {
+              directions.add(
+                  "Go straight towards "
+                      + getLandmark(currNode).getLongName()
+                      + " "
+                      + getDistanceString(getDistance(currNode, nextNode))
+                      + " and turn "
+                      + getTurnType(angle, getAngle(i - 1))
+                      + " at the next corridor");
             } else {
-              directions.add(message + " and take the next " + getTurnType(angle, getAngle(i - 1)));
+              directions.add(
+                  "Proceed to next intersection "
+                      + getDistanceString(getDistance(currNode, nextNode))
+                      + " and turn "
+                      + getTurnType(angle, getAngle(i - 1)));
             }
-            message = "";
-          } else if (!(getLandmark(currNode) == null)) {
-            directions.add(
-                "Go straight towards "
-                    + getLandmark(currNode).getLongName()
-                    + " "
-                    + getDistanceString(getDistance(currNode, nextNode))
-                    + " and turn "
-                    + getTurnType(angle, getAngle(i - 1))
-                    + " at the next corridor");
-          } else {
-            directions.add(
-                "Proceed to next corridor"
-                    + getDistanceString(getDistance(currNode, nextNode))
-                    + " and turn "
-                    + getTurnType(angle, getAngle(i - 1)));
           }
           break;
         case CHANGING_FLOOR: // not implemented yet
