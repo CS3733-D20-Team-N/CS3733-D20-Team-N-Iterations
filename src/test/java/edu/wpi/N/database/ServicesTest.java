@@ -57,6 +57,7 @@ public class ServicesTest {
    *
    * @throws DBException
    */
+
   @Test
   public void testGetAllEmotionalSupporters() throws DBException {
     try {
