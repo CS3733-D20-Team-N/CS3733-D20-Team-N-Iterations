@@ -1,16 +1,9 @@
 package edu.wpi.N.database;
 
 import edu.wpi.N.entities.*;
-import edu.wpi.N.entities.employees.Doctor;
-import edu.wpi.N.entities.employees.EmotionalSupporter;
-import edu.wpi.N.entities.employees.Employee;
-import edu.wpi.N.entities.employees.Laundry;
-import edu.wpi.N.entities.employees.Translator;
-import edu.wpi.N.entities.request.EmotionalRequest;
-import edu.wpi.N.entities.request.LaundryRequest;
-import edu.wpi.N.entities.request.MedicineRequest;
-import edu.wpi.N.entities.request.Request;
-import edu.wpi.N.entities.request.TranslatorRequest;
+import edu.wpi.N.entities.employees.*;
+import edu.wpi.N.entities.request.*;
+
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
@@ -53,6 +46,8 @@ public class ServiceDB {
         return new Laundry(id, name);
       } else if (sType.equals("Emotional Support")) {
         return new EmotionalSupporter(id, name);
+      } else if (sType.equals("Flower")) {
+        return new FlowerDeliverer(id, name);
       } else if (sType.equals("Medicine")) {
         return DoctorDB.getDoctor(id);
       } else
@@ -80,6 +75,7 @@ public class ServiceDB {
     allEmployee.addAll(getLaundrys());
     allEmployee.addAll(getEmotionalSupporters());
     allEmployee.addAll(DoctorDB.getDoctors());
+    allEmployee.addAll(getFlowerDeliverers());
     return allEmployee;
   }
 
@@ -347,6 +343,7 @@ public class ServiceDB {
     }
   }
 
+
   // Nick
 
   /**
@@ -394,7 +391,21 @@ public class ServiceDB {
     }
   }
   // TODO: GetEmployeeTypes (something which gets all the employees of your particular type)
-
+  public static LinkedList<FlowerDeliverer> getFlowerDeliverers() throws DBException {
+    try {
+      String query = "SELECT f_employeeID from employees, flowerDeliverer where employeeID = f_employeeID";
+      PreparedStatement stmt = con.prepareStatement(query);
+      ResultSet rs = stmt.executeQuery();
+      LinkedList<FlowerDeliverer> flowerDeliverers = new LinkedList<FlowerDeliverer>();
+      while (rs.next()) {
+        flowerDeliverers.add((FlowerDeliverer) getEmployee(rs.getInt("f_employeeID")));
+      }
+      return flowerDeliverers;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      throw new DBException("Unknown error: getFlowerDeliverers", e);
+    }
+  }
   /**
    * Gets all the emotional supporters in the database
    *
@@ -689,6 +700,34 @@ public class ServiceDB {
     }
   }
 
+  public static int addFlowerRequest(String reqNotes, String nodeID, String patientName, String visitorName, String flowerName, double creditNum) throws DBException {
+    try {
+      String query =
+              "INSERT INTO request (timeRequested, reqNotes, serviceType, nodeID, status) VALUES (?, ?, ?, ?, ?)";
+      PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+      stmt.setTimestamp(1, new Timestamp(new Date().getTime()));
+      stmt.setString(2, reqNotes);
+      stmt.setString(3, "Flower");
+      stmt.setString(4, nodeID);
+      stmt.setString(5, "OPEN");
+      stmt.execute();
+      ResultSet rs = stmt.getGeneratedKeys();
+      rs.next();
+      query = "INSERT INTO flowerRequest (requestID, patientName, visitorName, flowerName, creditNum) VALUES (?, ?, ?, ?, ?)";
+      stmt = con.prepareStatement(query);
+      int id = rs.getInt("1");
+      stmt.setInt(1, id);
+      stmt.setString(2, patientName);
+      stmt.setString(3, visitorName);
+      stmt.setString(4, flowerName);
+      stmt.setDouble(5, creditNum);
+      stmt.executeUpdate();
+      return id;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      throw new DBException("Error: addFlowerRequest", e);
+    }
+  }
   // Noah
 
   /**
@@ -838,7 +877,6 @@ public class ServiceDB {
   }
 
   // TODO: make functions for changing the attributes of your employees
-
   // Nick
 
   /**

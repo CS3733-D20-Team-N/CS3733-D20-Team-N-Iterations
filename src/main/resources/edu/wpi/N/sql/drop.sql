@@ -1,9 +1,11 @@
+DROP TABLE flowerRequest;
 DROP TABLE medicineRequests;
 DROP TABLE lrequest;
 DROP TABLE trequest;
 DROP TABLE request;
 DROP TABLE location;
 DROP TABLE doctors;
+DROP TABLE flowerDeliverer;
 DROP TABLE credential;
 DROP TABLE laundry;
 DROP TABLE language;
