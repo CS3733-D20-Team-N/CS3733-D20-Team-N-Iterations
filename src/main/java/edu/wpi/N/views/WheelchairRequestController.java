@@ -78,9 +78,9 @@ public class WheelchairRequestController implements Controller {
         cmbo_text.show();
     }
 
-    // Create Translator Request
+    // Create wheelchair Request
     @FXML
-    public void createNewTranslator() throws DBException {
+    public void createNewWheelchairRequest() throws DBException {
 
         String assistanceOption = cmbo_selectLang.getSelectionModel().getSelectedItem();
         String nodeID;
