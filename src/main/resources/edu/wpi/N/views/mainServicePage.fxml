@@ -1,9 +1,6 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -15,14 +12,14 @@
 
 <AnchorPane fx:id="servicePageTemplate" prefHeight="900.0" prefWidth="1264.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.N.views.TemplateController">
    <children>
-      <HBox alignment="CENTER_LEFT" layoutX="318.0" layoutY="14.0" prefHeight="150.0" prefWidth="629.0" spacing="30.0" style="-fx-background-color: #002186; -fx-background-radius: 10;">
+      <HBox alignment="CENTER_LEFT" layoutX="272.0" layoutY="14.0" prefHeight="150.0" prefWidth="768.0" spacing="30.0" style="-fx-background-color: #002186; -fx-background-radius: 10;">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/languageWhite.png" />
                </image>
             </ImageView>
-            <Label text="Translator Request" textFill="WHITE">
+            <Label text="Service Request Systems" textFill="WHITE">
                <font>
                   <Font name="Calibri" size="55.0" />
                </font>
@@ -34,29 +31,7 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="34.0" layoutY="160.0" prefHeight="542.0" prefWidth="1196.0" spacing="100.0">
          <children>
-            <VBox alignment="CENTER" maxHeight="509.0" maxWidth="500.0" minWidth="500.0" prefHeight="509.0" prefWidth="500.0" spacing="30.0">
-               <children>
-                  <Label text="Please Enter A Location To Send The Translator">
-                     <font>
-                        <Font name="Calibri" size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <JFXComboBox fx:id="cmbo_text" editable="true" labelFloat="true" onKeyTyped="#locationTextChanged" prefHeight="46.0" prefWidth="394.0" promptText="Enter Location" style="-fx-font-size: 18;" />
-                  <Label text="Please Select A Language For Translation">
-                     <font>
-                        <Font name="Calibri" size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="50.0" />
-                     </VBox.margin>
-                  </Label>
-                  <JFXComboBox fx:id="cmbo_selectLang" labelFloat="true" layoutX="63.0" layoutY="279.0" prefHeight="46.0" prefWidth="394.0" promptText="Select Language From List" style="-fx-font-size: 18;" />
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" maxHeight="500.0" maxWidth="500.0" minWidth="500.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
+            <VBox alignment="TOP_CENTER" maxHeight="500.0" maxWidth="500.0" minWidth="500.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
                <children>
                   <Label text="Please Enter Aditional Notes Below">
                      <font>
@@ -66,7 +41,6 @@
                         <Insets top="50.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXTextArea fx:id="txtf_langNotes" maxWidth="394.0" minWidth="394.0" prefHeight="138.0" prefWidth="394.0" promptText="Enter Notes Here" style="-fx-font-size: 18;" />
                </children></VBox>
          </children>
       </HBox>
