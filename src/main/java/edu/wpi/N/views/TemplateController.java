@@ -7,6 +7,7 @@ import edu.wpi.N.algorithms.FuzzySearchAlgorithm;
 import edu.wpi.N.database.DBException;
 import edu.wpi.N.database.ServiceDB;
 import edu.wpi.N.entities.DbNode;
+import edu.wpi.N.entities.States.StateSingleton;
 import java.util.LinkedList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,34 +17,59 @@ import javafx.scene.input.KeyEvent;
 
 public class TemplateController implements Controller {
 
-    private App mainApp;
+  private App mainApp;
+  private StateSingleton singleton;
+  // Add FXML Tags Here
+  @FXML JFXComboBox<String> cmbo_text;
+  @FXML JFXComboBox<String> cmbo_selectLang;
+  @FXML JFXTextArea txtf_langNotes;
 
-    // Add FXML Tags Here
-    @FXML JFXComboBox<String> cmbo_text;
-    @FXML JFXComboBox<String> cmbo_selectLang;
-    @FXML JFXTextArea txtf_langNotes;
+  private ObservableList<String> fuzzySearchTextList =
+      // List that fills TextViews
+      FXCollections.observableArrayList();
+  LinkedList<DbNode> fuzzySearchNodeList = new LinkedList<>();
+  DbNode currentNode = null;
 
-    private ObservableList<String> fuzzySearchTextList =
-            // List that fills TextViews
-            FXCollections.observableArrayList();
-    LinkedList<DbNode> fuzzySearchNodeList = new LinkedList<>();
-    DbNode currentNode = null;
+  private String countVal = "";
 
-    private String countVal = "";
+  public TemplateController() throws DBException {}
 
-    public TemplateController() throws DBException {}
+  public void setMainApp(App mainApp) {
+    this.mainApp = mainApp;
+  }
 
-    public void setMainApp(App mainApp) {
-        this.mainApp = mainApp;
-    }
+  @Override
+  public void setSingleton(StateSingleton singleton) {
+    this.singleton = singleton;
+  }
 
-    public void initialize() throws DBException {
+  public void initialize() throws DBException {
 
-        cmbo_text.getEditor().setOnKeyTyped(this::locationTextChanged);
-        LinkedList<String> languages = ServiceDB.getLanguages();
-        languages.add("French");
-        ObservableList<String> langList = FXCollections.observableList(languages);
-        cmbo_selectLang.setItems(langList);
+    cmbo_text.getEditor().setOnKeyTyped(this::locationTextChanged);
+    LinkedList<String> languages = ServiceDB.getLanguages();
+    languages.add("French");
+    ObservableList<String> langList = FXCollections.observableList(languages);
+    cmbo_selectLang.setItems(langList);
+  }
+
+  @FXML
+  public void autofillLocation(String currentText) {
+    System.out.println(currentText);
+    if (currentText.length() > 2) {
+      try {
+        fuzzySearchNodeList = FuzzySearchAlgorithm.suggestLocations(currentText);
+      } catch (DBException e) {
+        e.printStackTrace();
+      }
+      LinkedList<String> fuzzySearchStringList = new LinkedList<>();
+      if (fuzzySearchNodeList != null) {
+
+        for (DbNode node : fuzzySearchNodeList) {
+          fuzzySearchStringList.add(node.getLongName());
+        }
+        fuzzySearchTextList = FXCollections.observableList(fuzzySearchStringList);
+      }
+      System.out.println(fuzzySearchTextList);
     }
 
     @FXML
@@ -120,4 +146,17 @@ public class TemplateController implements Controller {
         confAlert.setContentText("Request Recieved");
         confAlert.show();
     }
+
+    int transReq = ServiceDB.addTransReq(notes, nodeID, langSelection);
+    // App.adminDataStorage.addToList(transReq);
+
+    txtf_langNotes.clear();
+    cmbo_selectLang.getItems().clear();
+    cmbo_text.getItems().clear();
+
+    Alert confAlert = new Alert(Alert.AlertType.CONFIRMATION);
+    confAlert.setContentText("Request Recieved");
+    confAlert.show();
+  }
 }
+
