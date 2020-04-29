@@ -466,22 +466,6 @@ public class hamburgerTestController implements Controller, Initializable {
   }
 
   /**
-   * Finds and draws path to the cafeteria
-   *
-   * @param e
-   */
-  @FXML
-  private void findPathToCafeteria(MouseEvent e) throws DBException {
-    this.mode = Mode.PATH_STATE;
-    pn_display.getChildren().removeIf(node -> node instanceof Line);
-    enableAllFloorButtons();
-    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-    errorAlert.setHeaderText("Oops... Something went Wong");
-    errorAlert.setContentText("Path to cafeteria wasn't found");
-    errorAlert.showAndWait();
-  }
-
-  /**
    * Finds and draws path to the Cafetaria
    *
    * @param e
