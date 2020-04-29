@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import edu.wpi.N.App;
 import edu.wpi.N.algorithms.FuzzySearchAlgorithm;
 import edu.wpi.N.database.DBException;
+import edu.wpi.N.database.MapDB;
 import edu.wpi.N.database.ServiceDB;
 import edu.wpi.N.entities.DbNode;
 import edu.wpi.N.entities.Flower;
@@ -56,6 +57,7 @@ public class FlowerRequestController implements Controller {
   }
 
   public void initialize() throws DBException {
+    cmbo_text.getEditor().setOnKeyTyped(this::locationTextChanged);
     LinkedList<Flower> listFlower = ServiceDB.getFlowers();
     LinkedList<String> list = new LinkedList<>();
     for (Flower f : listFlower) {
@@ -105,19 +107,25 @@ public class FlowerRequestController implements Controller {
     String creditNum = txt_creditNum.getText();
     String quantity = txt_quantity.getText();
     String flowerSelection = cb_flowerType.getSelectionModel().getSelectedItem();
-    String nodeID;
+    String nodeID = "";
     int nodeIndex = 0;
 
     try {
-      String curr = cmbo_text.getEditor().getText();
-      for (String name : fuzzySearchTextList) {
-        if (name.equals(curr)) {
-          nodeIndex++;
+      String curr = cmbo_text.getEditor().getText().toLowerCase().trim();
+      LinkedList<DbNode> checkNodes = MapDB.searchVisNode(-1, null, null, curr);
+      for (DbNode node : checkNodes) {
+        if (node.getLongName().toLowerCase().equals(curr)) {
+          nodeID = node.getNodeID();
           break;
         }
       }
-      nodeID = fuzzySearchNodeList.get(nodeIndex).getNodeID();
-      System.out.println(nodeID);
+      if (nodeID == null) {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setContentText(
+            "Please select a location for your service request from suggestions menu!");
+        errorAlert.show();
+        return;
+      }
     } catch (IndexOutOfBoundsException e) {
       Alert errorAlert = new Alert(Alert.AlertType.ERROR);
       errorAlert.setContentText("Please select a location for your service request!");
@@ -142,11 +150,11 @@ public class FlowerRequestController implements Controller {
 
     txt_notes.clear();
     cb_flowerType.getItems().clear();
-    cmbo_text.getItems().clear();
     txt_creditNum.clear();
     txt_patientName.clear();
     txt_quantity.clear();
     txt_visitorName.clear();
+    cmbo_text.getItems().clear();
 
     Alert confAlert = new Alert(Alert.AlertType.CONFIRMATION);
     confAlert.setContentText("Request Recieved");
