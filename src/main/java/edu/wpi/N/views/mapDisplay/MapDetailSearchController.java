@@ -63,8 +63,8 @@ public class MapDetailSearchController implements Controller {
     NewMapDisplayController.BuildingSearch(option, lst_fuzzySearch);
   }
 
-  public void onSelectAlphabet(MouseEvent e, String option){
-    //populateChangeAlphabet();
+  public void onSelectAlphabet(MouseEvent e, String option) {
+    populateChangeAlphabet();
   }
 
   public void onItemSelected(MouseEvent e) {
@@ -108,6 +108,17 @@ public class MapDetailSearchController implements Controller {
     ObservableList<String> direct;
     direct = FXCollections.observableList(buildingTypes);
     lst_fuzzySearch.setItems(direct);
+  }
+
+  public void populateChangeAlphabet() {
+    String sample = "abcdefghijklmnopqrstuvwxyz";
+    LinkedList<String> alphabet = new LinkedList<>();
+    for (int i = 0; i < sample.length(); i++) {
+      alphabet.add("[" + sample.indexOf(i) + "]");
+    }
+    ObservableList<String> real_alpha;
+    real_alpha = FXCollections.observableList(alphabet);
+    lst_fuzzySearch.setItems(real_alpha);
   }
 
   public void clearDbNodes() {
