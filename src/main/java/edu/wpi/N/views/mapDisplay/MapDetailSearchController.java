@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 import edu.wpi.N.App;
 import edu.wpi.N.database.DBException;
+import edu.wpi.N.database.MapDB;
 import edu.wpi.N.entities.DbNode;
 import edu.wpi.N.views.Controller;
 import java.util.LinkedList;
@@ -20,7 +21,7 @@ public class MapDetailSearchController implements Controller {
 
   @FXML JFXComboBox cmb_detail;
   @FXML TextField txt_location;
-  @FXML ListView lst_fuzzySearch;
+  @FXML ListView<String> lst_fuzzySearch;
   @FXML TextField activeText;
   @FXML JFXButton btn_search;
   @FXML JFXButton btn_doctor;
@@ -57,14 +58,25 @@ public class MapDetailSearchController implements Controller {
     }
   }
 
+  public void populateSpecificBuilding(String option) throws DBException {
+    ObservableList<DbNode> list;
+    LinkedList<DbNode> buildings = new LinkedList<>();
+    buildings = MapDB.searchVisNode(-1, option, null, null);
+    for(DbNode d : buildings)
+    {
+
+    }
+    LinkedList<String> longName_buildings =
+  }
+
   public void onSelectBuilding(MouseEvent e, String option) throws DBException {
     populateChangeBuilding();
     lst_fuzzySearch.getSelectionModel().clearSelection();
-    NewMapDisplayController.BuildingSearch(option, lst_fuzzySearch);
   }
 
   public void onSelectAlphabet(MouseEvent e, String option) {
     populateChangeAlphabet();
+    lst_fuzzySearch.getSelectionModel().clearSelection();
   }
 
   public void onItemSelected(MouseEvent e) {
@@ -76,9 +88,9 @@ public class MapDetailSearchController implements Controller {
               + ((DbNode) lv.getSelectionModel().getSelectedItem()).getBuilding());
       nodes[0] = (DbNode) lv.getSelectionModel().getSelectedItem();
     } else {
-      if (lv.getSelectionModel().getSelectedItems().get(0) instanceof String) {
+      if (lv.getSelectionModel().getSelectedItems() instanceof ) {
         // onSelectOption(e);
-      } else if (lv.getSelectionModel().getSelectedItems().get(0) instanceof Character) {
+      } else if (lv.getSelectionModel().getSelectedItems() instanceof) {
         // onSelectOption(e);
       } else {
 
