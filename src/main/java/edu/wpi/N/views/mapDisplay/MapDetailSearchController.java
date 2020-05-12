@@ -7,21 +7,23 @@ import edu.wpi.N.App;
 import edu.wpi.N.database.DBException;
 import edu.wpi.N.database.MapDB;
 import edu.wpi.N.entities.DbNode;
+import edu.wpi.N.entities.States.StateSingleton;
 import edu.wpi.N.views.Controller;
 import java.util.LinkedList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 
 public class MapDetailSearchController implements Controller {
 
-  @FXML JFXComboBox cmb_detail;
+  @FXML JFXComboBox<String> cmb_detail;
   @FXML TextField txt_location;
-  @FXML ListView<String> lst_fuzzySearch;
+  @FXML ListView<String> lst_selection;
+  @FXML ListView<DbNode> lst_fuzzySearch;
   @FXML TextField activeText;
   @FXML JFXButton btn_search;
   @FXML JFXButton btn_doctor;
@@ -29,73 +31,160 @@ public class MapDetailSearchController implements Controller {
   @FXML JFXButton btn_reset;
   @FXML DbNode[] nodes = new DbNode[1];
 
+  private StateSingleton singleton;
+  private NewMapDisplayController con;
+  private DepartmentClicked deptHandler = new DepartmentClicked();
+  private BuildingClicked buildHandler = new BuildingClicked();
+  private AlphabetClicked alphaHandler = new AlphabetClicked();
+
   @Override
   public void setMainApp(App mainApp) {}
 
+  private class BuildingClicked implements ChangeListener<String> {
+
+    public BuildingClicked() {
+      super();
+    }
+
+    @Override
+    public void changed(
+        ObservableValue<? extends String> observable, String oldVal, String newVal) {
+      if (newVal != null) {
+        try {
+          ObservableList<DbNode> nodes =
+              FXCollections.observableArrayList(MapDB.searchVisNode(-1, newVal, null, null));
+          lst_fuzzySearch.setItems(nodes);
+          lst_selection.setVisible(false);
+          lst_fuzzySearch.setVisible(true);
+          cmb_detail.getSelectionModel().select(-1);
+        } catch (DBException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+
+  private class AlphabetClicked implements ChangeListener<String> {
+
+    public AlphabetClicked() {
+      super();
+    }
+
+    @Override
+    public void changed(
+        ObservableValue<? extends String> observable, String oldVal, String newVal) {}
+  }
+
+  private class DepartmentClicked implements ChangeListener<String> {
+
+    public DepartmentClicked() {
+      super();
+    }
+
+    @Override
+    public void changed(
+        ObservableValue<? extends String> observable, String oldVal, String newVal) {}
+  }
+
+  private class nodeClicked implements ChangeListener<DbNode> {
+
+    @Override
+    public void changed(
+        ObservableValue<? extends DbNode> observable, DbNode oldVal, DbNode newVal) {}
+  }
+
+  public MapDetailSearchController(StateSingleton singleton, NewMapDisplayController con) {
+    this.singleton = singleton;
+    this.con = con;
+  }
+
   public void initialize() {
+    System.out.println("Initialize");
+    cmb_detail
+        .getSelectionModel()
+        .selectedItemProperty()
+        .addListener(
+            (obs, old, newval) -> {
+              if (newval != null) {
+                lst_fuzzySearch.setVisible(false);
+                lst_selection.setVisible(true);
+                if (newval.equals("Building")) {
+                  populateChangeBuilding();
+                  lst_selection
+                      .getSelectionModel()
+                      .selectedItemProperty()
+                      .removeListener(deptHandler);
+                  lst_selection
+                      .getSelectionModel()
+                      .selectedItemProperty()
+                      .removeListener(alphaHandler);
+                  lst_selection
+                      .getSelectionModel()
+                      .selectedItemProperty()
+                      .addListener(buildHandler);
+                } else if (newval.equals("Alphabetical")) {
+                  lst_selection
+                      .getSelectionModel()
+                      .selectedItemProperty()
+                      .removeListener(deptHandler);
+                  lst_selection
+                      .getSelectionModel()
+                      .selectedItemProperty()
+                      .addListener(alphaHandler);
+                  lst_selection
+                      .getSelectionModel()
+                      .selectedItemProperty()
+                      .removeListener(buildHandler);
+                } else if (newval.equals("Department")) {
+                  lst_selection.getSelectionModel().selectedItemProperty().addListener(deptHandler);
+                  lst_selection
+                      .getSelectionModel()
+                      .selectedItemProperty()
+                      .removeListener(alphaHandler);
+                  lst_selection
+                      .getSelectionModel()
+                      .selectedItemProperty()
+                      .removeListener(buildHandler);
+                }
+              }
+            });
+    lst_fuzzySearch.setVisible(false);
+    lst_fuzzySearch.getSelectionModel().selectedItemProperty().addListener(new nodeClicked());
     populateChangeOption();
   }
 
   public void onSearchLocation(KeyEvent e) throws DBException {
     activeText = (TextField) e.getSource();
-    lst_fuzzySearch.getSelectionModel().clearSelection();
+    lst_selection.getSelectionModel().clearSelection();
     NewMapDisplayController.fuzzyLocationSearch(activeText, lst_fuzzySearch);
   }
 
-  public void onSelectOption(MouseEvent e) throws DBException {
-    Object option = cmb_detail.getSelectionModel().getSelectedItem();
-    if (option == null) {
-      return;
-    }
-    String firstOption = option.toString();
-    // System.out.println(firstOption);
-    if (firstOption.equals("Building")) {
-      onSelectBuilding(e, firstOption);
-    } else if (option.equals("Department")) {
-
-    } else {
-      onSelectAlphabet(e, firstOption);
-    }
-  }
-
-  public void populateSpecificBuilding(String option) throws DBException {
+  public static void BuildingSearch(String option, ListView lst) throws DBException {
     ObservableList<DbNode> list;
     LinkedList<DbNode> buildings = new LinkedList<>();
     buildings = MapDB.searchVisNode(-1, option, null, null);
-    for(DbNode d : buildings)
-    {
+    list = FXCollections.observableList(buildings);
+    lst.setItems(list);
+  }
 
+  public static void AlphabeticalSearch(String option, ListView lst) throws DBException {
+    ObservableList<DbNode> list;
+    LinkedList<DbNode> alphabet;
+    alphabet = MapDB.getRoomsByFirstLetter(option.charAt(0));
+    list = FXCollections.observableList(alphabet);
+    lst.setItems(list);
+  }
+
+  public static void DepartmentSearch(String option, ListView lst) throws DBException {
+    ObservableList<DbNode> list;
+    LinkedList<DbNode> depart = new LinkedList<>();
+    LinkedList<String> lst_nodeID = new LinkedList<>();
+    lst_nodeID = MapDB.getNodeIDbyField(option);
+    for (String s : lst_nodeID) {
+      depart.add(MapDB.getNode(s));
     }
-    LinkedList<String> longName_buildings =
-  }
-
-  public void onSelectBuilding(MouseEvent e, String option) throws DBException {
-    populateChangeBuilding();
-    lst_fuzzySearch.getSelectionModel().clearSelection();
-  }
-
-  public void onSelectAlphabet(MouseEvent e, String option) {
-    populateChangeAlphabet();
-    lst_fuzzySearch.getSelectionModel().clearSelection();
-  }
-
-  public void onItemSelected(MouseEvent e) {
-    ListView lv = (ListView) e.getSource();
-    if (activeText == txt_location) {
-      activeText.setText(
-          lv.getSelectionModel().getSelectedItem().toString()
-              + ", "
-              + ((DbNode) lv.getSelectionModel().getSelectedItem()).getBuilding());
-      nodes[0] = (DbNode) lv.getSelectionModel().getSelectedItem();
-    } else {
-      if (lv.getSelectionModel().getSelectedItems() instanceof ) {
-        // onSelectOption(e);
-      } else if (lv.getSelectionModel().getSelectedItems() instanceof) {
-        // onSelectOption(e);
-      } else {
-
-      }
-    }
+    list = FXCollections.observableList(depart);
+    lst.setItems(list);
   }
 
   public void populateChangeOption() {
@@ -119,18 +208,7 @@ public class MapDetailSearchController implements Controller {
     buildingTypes.add("FLEX");
     ObservableList<String> direct;
     direct = FXCollections.observableList(buildingTypes);
-    lst_fuzzySearch.setItems(direct);
-  }
-
-  public void populateChangeAlphabet() {
-    String sample = "abcdefghijklmnopqrstuvwxyz";
-    LinkedList<String> alphabet = new LinkedList<>();
-    for (int i = 0; i < sample.length(); i++) {
-      alphabet.add("[" + sample.indexOf(i) + "]");
-    }
-    ObservableList<String> real_alpha;
-    real_alpha = FXCollections.observableList(alphabet);
-    lst_fuzzySearch.setItems(real_alpha);
+    lst_selection.setItems(direct);
   }
 
   public void clearDbNodes() {
@@ -146,8 +224,8 @@ public class MapDetailSearchController implements Controller {
     return txt_location;
   }
 
-  public ListView getLst_fuzzySearch() {
-    return lst_fuzzySearch;
+  public ListView getLst_selection() {
+    return lst_selection;
   }
 
   public TextField getActiveText() {
