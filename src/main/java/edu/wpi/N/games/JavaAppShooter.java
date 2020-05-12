@@ -13,7 +13,7 @@ class Games2 extends JFrame {
     GamePane2 p = new GamePane2();
     this.add(p);
     this.setLocationRelativeTo(null);
-    this.setSize(400, 400);
+    this.setSize(300, 300);
     this.setResizable(false);
     this.setVisible(true);
     p.start();
@@ -32,7 +32,7 @@ class GamePane2 extends JPanel {
     base.setOpaque(true);
     base.setBackground(Color.BLUE);
 
-    ImageIcon img = new ImageIcon("");
+    ImageIcon img = new ImageIcon("resources/edu/wpi/N/images/wong_sun.PNG");
     target = new JLabel(img);
     target.setSize(img.getIconWidth(), img.getIconHeight());
 
