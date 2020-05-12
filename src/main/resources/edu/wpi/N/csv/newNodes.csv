@@ -718,7 +718,7 @@ AEXIT00101,868,415,1,Faulkner,EXIT,Emergency Department Exit,Emergency Departmen
 AEXIT0010G,1679,2459,3,BTM,EXIT,Fenwood Road,Fenwood Road,Z
 AEXIT001L2,1699,2797,1,BTM,EXIT,Parking Garage,Parking Garage L2,Z
 AEXIT00301,2342,1136,1,Faulkner,EXIT,Stair Exit,Stair Exit,A
-AEXIT00501,1256,144,1,Faulkner,EXIT,Atrium Main Entrance,,A
+AEXIT00501,1256,144,1,Faulkner,EXIT,Atrium edu.wpi.N.Main Entrance,,A
 SHALL00303,1199,256,3,Faulkner,HALL,Hall,Hall,S
 SHALL01203,1315,260,3,Faulkner,HALL,Hall,Hall,S
 SHALL01303,1364,649,3,Faulkner,HALL,Hall,Hall,S

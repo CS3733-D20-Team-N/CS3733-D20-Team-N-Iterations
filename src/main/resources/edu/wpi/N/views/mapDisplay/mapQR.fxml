@@ -27,7 +27,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="tb_main_directions" styleClass="jtab" text="Main">
+            <Tab fx:id="tb_main_directions" styleClass="jtab" text="edu.wpi.N.Main">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

@@ -56,7 +56,7 @@ public class MapDB {
   //      ScriptRunner sr = new ScriptRunner(con);
   //      Reader reader =
   //          new BufferedReader(
-  //              new InputStreamReader(Main.class.getResourceAsStream("sql/setup.sql")));
+  //              new InputStreamReader(edu.wpi.N.Main.class.getResourceAsStream("sql/setup.sql")));
   //      sr.runScript(reader);
   //    }
   //  }

@@ -32,7 +32,7 @@
 //
 //  private StateSingleton singleton;
 //
-//  private App mainApp = null;
+//  private edu.wpi.N.App mainApp = null;
 //
 //  @FXML Pane pn_display;
 //  @FXML Pane pn_changeFloor;
@@ -117,7 +117,7 @@
 ////  }
 ////
 ////  /**
-////   * Switches the Map Base view to Main Hospital Map
+////   * Switches the Map Base view to edu.wpi.N.Main Hospital Map
 ////   *
 ////   * @throws DBException
 ////   */
@@ -127,11 +127,11 @@
 // street
 ////    try {
 ////      mapContainer.getChildren().setAll(hospitalView);
-////      // TODO: make it point to Main
-////      mapBaseController.setBuilding("Main", numFloor, this.path);
+////      // TODO: make it point to edu.wpi.N.Main
+////      mapBaseController.setBuilding("edu.wpi.N.Main", numFloor, this.path);
 ////    } catch (DBException e) {
 ////      e.printStackTrace();
-////      displayErrorMessage("Error: Switching to Main Hospital - 45 Francis");
+////      displayErrorMessage("Error: Switching to edu.wpi.N.Main Hospital - 45 Francis");
 ////    }
 ////  }
 //
@@ -314,15 +314,15 @@
 // {
 ////      try {
 ////        FXMLLoader loader = new FXMLLoader();
-////        loader.setLocation(App.class.getResource("views/mapDisplay/googleMap.fxml"));
+////        loader.setLocation(edu.wpi.N.App.class.getResource("views/mapDisplay/googleMap.fxml"));
 ////
 ////        String pathToHTML = null;
 ////
 ////        if (first.getBuilding().equals("Faulkner")) {
-////          // go from Falkner to Main
+////          // go from Falkner to edu.wpi.N.Main
 ////          pathToHTML = "views/googleMapFaulknerToMain.html";
 ////        } else {
-////          // going from Main to Falkner
+////          // going from edu.wpi.N.Main to Falkner
 ////          pathToHTML = "views/googleMapMainToFaulkner.html";
 ////        }
 ////
@@ -412,7 +412,7 @@
 ////        // TODO: change it to work so the view gets selected as Start Node building and floor
 ////        // A.K. Generic
 ////        int numFloor = CSVParser.convertFloor("L2");
-////        mapBaseController.setBuilding("Main", numFloor, this.path);
+////        mapBaseController.setBuilding("edu.wpi.N.Main", numFloor, this.path);
 ////      }
 ////    } catch (DBException ex) {
 ////      displayErrorMessage("Error when resetting view to Start Node");
@@ -430,7 +430,7 @@
 //  //    setDefaultKioskNode();
 //  //  }
 //
-//  //  public void setMainApp(App mainApp) {
+//  //  public void setMainApp(edu.wpi.N.App mainApp) {
 //  //    this.mainApp = mainApp;
 //  //  }
 //

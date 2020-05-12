@@ -706,7 +706,7 @@ ADEPT01101,2244,1090,1,Faulkner,DEPT,Operation Room Entrance 2,Operation Room En
 ADEPT01201,2160,1133,1,Faulkner,DEPT,Operation Room,Operation Room,A
 AELEV00X01,1208,414,1,Faulkner,ELEV,Elevator 1 Level 1,Elevator Intersection 1 Level 1,A
 AELEV00Y01,1181,1157,1,Faulkner,ELEV,Elevator 2 Level 1,Elevator Intersection 2 Level 2,A
-AEXIT00501,1256,144,1,Faulkner,EXIT,Atrium Main Entrance,,A
+AEXIT00501,1256,144,1,Faulkner,EXIT,Atrium edu.wpi.N.Main Entrance,,A
 AEXIT00101,868,415,1,Faulkner,EXIT,Emergency Department Exit,Emergency Department Exit,A
 AEXIT00301,2342,1136,1,Faulkner,EXIT,Stair Exit,Stair Exit,A
 AHALL02401,1256,232,1,Faulkner,HALL,Hallway Intersection 1,,A

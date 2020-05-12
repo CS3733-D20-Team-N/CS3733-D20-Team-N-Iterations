@@ -125,7 +125,7 @@ public class MapBaseController implements Controller {
   public void setFloor(String building, int floor, Path currentPath) throws DBException {
     clearPath();
     if (!building.equals("Faulkner")) {
-      building = "Main";
+      building = "edu.wpi.N.Main";
       setMainDefaults();
     } else {
       setFaulknerDefaults();

@@ -29,7 +29,7 @@ public class MapQRController implements Controller {
   public void setDirectionTab(String location) {
     if (location.equals("Faulkner")) {
       tbpn_directions.getSelectionModel().select(0);
-    } else if (location.equals("Main")) {
+    } else if (location.equals("edu.wpi.N.Main")) {
       tbpn_directions.getSelectionModel().select(1);
     } else if (location.equals("Street View")) {
       tbpn_directions.getSelectionModel().select(2);

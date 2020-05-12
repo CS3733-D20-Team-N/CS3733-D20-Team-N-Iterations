@@ -157,7 +157,7 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
     styleBuildingButtons(btn_buildings);
     JFXButton btn_faulkner = new JFXButton("Faulkner");
     styleBuildingButtons(btn_faulkner);
-    JFXButton btn_main = new JFXButton("Main");
+    JFXButton btn_main = new JFXButton("edu.wpi.N.Main");
     styleBuildingButtons(btn_main);
     btn_google = new JFXButton("Street View");
     styleBuildingButtons(btn_google);
@@ -185,7 +185,7 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
             btn_faulkner4,
             btn_faulkner5);
 
-    // Main Buttons
+    // edu.wpi.N.Main Buttons
     JFXButton btn_main1 = new JFXButton("L2");
     styleFloorButtons(btn_main1);
     JFXButton btn_main2 = new JFXButton("L1");
@@ -318,55 +318,55 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
         setDefaultKioskNode();
       }
     } else if (txt.equals("L2")) {
-      changeFloor(1, "Main");
+      changeFloor(1, "edu.wpi.N.Main");
       switchHospitalView();
       this.currentFloor = 1;
-      this.currentBuilding = "Main";
+      this.currentBuilding = "edu.wpi.N.Main";
       setDirectionsTab();
       if (path != null && path.size() < 1) {
         setDefaultKioskNode();
       }
     } else if (txt.equals("L1")) {
       switchHospitalView();
-      changeFloor(2, "Main");
+      changeFloor(2, "edu.wpi.N.Main");
       this.currentFloor = 2;
-      this.currentBuilding = "Main";
+      this.currentBuilding = "edu.wpi.N.Main";
       setDirectionsTab();
       if (path != null && path.size() < 1) {
         setDefaultKioskNode();
       }
     } else if (txt.equals("G")) {
       switchHospitalView();
-      changeFloor(3, "Main");
+      changeFloor(3, "edu.wpi.N.Main");
       this.currentFloor = 3;
-      this.currentBuilding = "Main";
+      this.currentBuilding = "edu.wpi.N.Main";
       setDirectionsTab();
       if (path != null && path.size() < 1) {
         setDefaultKioskNode();
       }
     } else if (txt.equals("1")) {
       switchHospitalView();
-      changeFloor(4, "Main");
+      changeFloor(4, "edu.wpi.N.Main");
       this.currentFloor = 4;
-      this.currentBuilding = "Main";
+      this.currentBuilding = "edu.wpi.N.Main";
       setDirectionsTab();
       if (path != null && path.size() < 1) {
         setDefaultKioskNode();
       }
     } else if (txt.equals("2")) {
       switchHospitalView();
-      changeFloor(5, "Main");
+      changeFloor(5, "edu.wpi.N.Main");
       this.currentFloor = 5;
-      this.currentBuilding = "Main";
+      this.currentBuilding = "edu.wpi.N.Main";
       setDirectionsTab();
       if (path != null && path.size() < 1) {
         setDefaultKioskNode();
       }
     } else if (txt.equals("3")) {
       switchHospitalView();
-      changeFloor(6, "Main");
+      changeFloor(6, "edu.wpi.N.Main");
       this.currentFloor = 6;
-      this.currentBuilding = "Main";
+      this.currentBuilding = "edu.wpi.N.Main";
       setDirectionsTab();
       if (this.path.size() < 1) {
         setDefaultKioskNode();
@@ -793,7 +793,7 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
       mapQRController.setDirectionTab("Faulkner");
       return;
     }
-    mapQRController.setDirectionTab("Main");
+    mapQRController.setDirectionTab("edu.wpi.N.Main");
   }
 
   /**

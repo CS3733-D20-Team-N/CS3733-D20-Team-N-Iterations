@@ -131,7 +131,7 @@ public class WheelchairRequestController implements Controller {
 
     ServiceDB.addWheelchairRequest(notes, nodeID, assistanceOption);
 
-    // App.adminDataStorage.addToList(wheelchairReq);
+    // edu.wpi.N.App.adminDataStorage.addToList(wheelchairReq);
 
     txtf_notes.clear();
     cmbo_selectAssistance.getItems().clear();

@@ -44,7 +44,7 @@ public class MapDisplayControllerOUTDATED extends QRGenerator implements Control
     this.singleton = singleton;
   }
 
-  private App mainApp;
+  private edu.wpi.N.App mainApp;
   final float BAR_WIDTH = 300;
   final float IMAGE_WIDTH = 2475;
   final float IMAGE_HEIGHT = 1485;
@@ -112,7 +112,7 @@ public class MapDisplayControllerOUTDATED extends QRGenerator implements Control
 
   public MapDisplayControllerOUTDATED() throws DBException {}
 
-  public void setMainApp(App mainApp) {
+  public void setMainApp(edu.wpi.N.App mainApp) {
     this.mainApp = mainApp;
   }
 
