@@ -1300,4 +1300,12 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
       dirThread.start();
     }
   }
+
+    public void setCurrentBuilding(String currentBuilding) {
+        this.currentBuilding = currentBuilding;
+    }
+
+    public void setCurrentFloor(int currentFloor) {
+        this.currentFloor = currentFloor;
+    }
 }
