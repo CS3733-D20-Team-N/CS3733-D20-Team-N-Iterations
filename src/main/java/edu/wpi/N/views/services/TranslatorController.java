@@ -116,7 +116,7 @@ public class TranslatorController implements Controller {
       return;
     }
     int transReq = ServiceDB.addTransReq(notes, nodeID, langSelection);
-    // App.adminDataStorage.addToList(transReq);
+    // edu.wpi.N.App.adminDataStorage.addToList(transReq);
 
     txtf_langNotes.clear();
     cmbo_selectLang.getItems().clear();
