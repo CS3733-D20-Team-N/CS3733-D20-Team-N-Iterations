@@ -387,6 +387,23 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
             });
   }
 
+  /** initiates a listener for the search button on a directory search */
+  public void initDetailSearchButton() {
+    detailSearchController
+        .getBtn_search()
+        .setOnMouseClicked(
+            e -> {
+              try {
+                initPathfind(
+                    (detailSearchController.getDBNodes())[0],
+                    (detailSearchController.getDBNodes())[1],
+                    detailSearchController.getTg_handicap());
+              } catch (IOException | DBException ex) {
+                ex.printStackTrace();
+              }
+            });
+  }
+
   /**
    * initiates a listener for the reset button on a location search
    *
@@ -433,7 +450,7 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
               if (this.path != null) {
                 this.path.clear();
               }
-              enableAllFloorButtons();
+              mapBaseController.resetFocus();
               setGoogleButtonDisable(true);
               detailSearchController.getLst_selection().getItems().clear();
               detailSearchController.getlst_fuzzy().getItems().clear();
@@ -464,9 +481,9 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
               } catch (DBException ex) {
                 ex.printStackTrace();
               }
-              enableAllFloorButtons();
               switchHospitalView();
               setGoogleButtonDisable(true);
+              mapBaseController.resetFocus();
               doctorSearchController.getTextLocation().clear();
               doctorSearchController.getTxtDoctor().clear();
               doctorSearchController.getFuzzyList().getItems().clear();
@@ -476,7 +493,6 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
               mainButtonList.animateList(false);
               faulknerButtonList.animateList(false);
               disableTextDirections();
-              enableAllFloorButtons();
               try {
                 setDefaultKioskNode();
               } catch (DBException ex) {
@@ -865,6 +881,7 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
       loader.setControllerFactory((obj) -> new MapDetailSearchController(this.singleton, this));
       Pane pane = loader.load();
       detailSearchController = loader.getController();
+      initDetailSearchButton();
       initResetDetailSearch();
       setDefaultKioskNode();
       pn_change.getChildren().add(pane);
@@ -891,12 +908,17 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
     initResetLocationSearch();
     initRestroomSearchButton();
     setDefaultKioskNode();
-    locationSearchController.nodes[1] = node;
+    locationSearchController.nodes[0] = node;
     LinkedList<DbNode> nlist = new LinkedList<DbNode>();
     nlist.add(node);
     mapBaseController.setFloor(node.getBuilding(), node.getFloor(), null);
-    locationSearchController.txt_secondLocation.setText(
-        node.getLongName() + ", " + node.getBuilding());
+    // TODO: can change location
+    if (locationSearchController.txt_firstLocation.getText() != null) {
+      locationSearchController.txt_secondLocation.setText(
+          node.getLongName() + "," + node.getBuilding());
+    } else
+      locationSearchController.txt_firstLocation.setText(
+          node.getLongName() + "," + node.getBuilding());
     Label label = new Label();
     label.setTextAlignment(TextAlignment.CENTER);
     label.setAlignment(Pos.CENTER);
