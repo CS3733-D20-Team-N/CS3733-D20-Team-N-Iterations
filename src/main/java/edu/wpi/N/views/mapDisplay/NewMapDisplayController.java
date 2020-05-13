@@ -387,23 +387,6 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
             });
   }
 
-  /** initiates a listener for the search button on a directory search */
-  public void initDetailSearchButton() {
-    detailSearchController
-        .getBtn_search()
-        .setOnMouseClicked(
-            e -> {
-              try {
-                initPathfind(
-                    (detailSearchController.getDBNodes())[0],
-                    (detailSearchController.getDBNodes())[1],
-                    detailSearchController.getTg_handicap());
-              } catch (IOException | DBException ex) {
-                ex.printStackTrace();
-              }
-            });
-  }
-
   /**
    * initiates a listener for the reset button on a location search
    *
@@ -451,10 +434,8 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
                 this.path.clear();
               }
               mapBaseController.resetFocus();
-              setGoogleButtonDisable(true);
               detailSearchController.getLst_selection().getItems().clear();
               detailSearchController.getlst_fuzzy().getItems().clear();
-              detailSearchController.getCmb_detail().getItems().clear();
               try {
                 setDefaultKioskNode();
               } catch (DBException ex) {
@@ -880,7 +861,6 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
       loader.setControllerFactory((obj) -> new MapDetailSearchController(this.singleton, this));
       Pane pane = loader.load();
       detailSearchController = loader.getController();
-      initDetailSearchButton();
       initResetDetailSearch();
       setDefaultKioskNode();
       pn_change.getChildren().add(pane);
@@ -907,17 +887,12 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
     initResetLocationSearch();
     initRestroomSearchButton();
     setDefaultKioskNode();
-    locationSearchController.nodes[0] = node;
+    locationSearchController.nodes[1] = node;
     LinkedList<DbNode> nlist = new LinkedList<DbNode>();
     nlist.add(node);
     mapBaseController.setFloor(node.getBuilding(), node.getFloor(), null);
-    // TODO: can change location
-    if (locationSearchController.txt_firstLocation.getText() != null) {
-      locationSearchController.txt_secondLocation.setText(
-          node.getLongName() + "," + node.getBuilding());
-    } else
-      locationSearchController.txt_firstLocation.setText(
-          node.getLongName() + "," + node.getBuilding());
+    locationSearchController.txt_secondLocation.setText(
+        node.getLongName() + "," + node.getBuilding());
     Label label = new Label();
     label.setTextAlignment(TextAlignment.CENTER);
     label.setAlignment(Pos.CENTER);
@@ -1301,11 +1276,11 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
     }
   }
 
-    public void setCurrentBuilding(String currentBuilding) {
-        this.currentBuilding = currentBuilding;
-    }
+  public void setCurrentBuilding(String currentBuilding) {
+    this.currentBuilding = currentBuilding;
+  }
 
-    public void setCurrentFloor(int currentFloor) {
-        this.currentFloor = currentFloor;
-    }
+  public void setCurrentFloor(int currentFloor) {
+    this.currentFloor = currentFloor;
+  }
 }
