@@ -110,9 +110,9 @@
                   </AnchorPane>
                   <AnchorPane fx:id="pn_directIcon" layoutY="165.0" onMouseClicked="#onIconClicked" prefHeight="55.0" prefWidth="55.0">
                      <children>
-                        <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="7.0" layoutY="7.0">
+                        <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="10.0" layoutY="10.0" AnchorPane.topAnchor="10.0">
                            <image>
-                              <Image url="@../../../../../../../../../../16772596991553230897-256.png" />
+                              <Image url="@../../images/mapIcons/globe-search-icon.gif" />
                            </image>
                         </ImageView>
                      </children></AnchorPane>

@@ -37,7 +37,6 @@ public class MapDetailSearchController implements Controller {
   private DepartmentClicked deptHandler = new DepartmentClicked();
   private BuildingClicked buildHandler = new BuildingClicked();
   private AlphabetClicked alphaHandler = new AlphabetClicked();
-  // private DoctorClicked doctorHandler = new DoctorClicked();
 
   @Override
   public void setMainApp(App mainApp) {}
@@ -249,6 +248,10 @@ public class MapDetailSearchController implements Controller {
 
   public ListView getLst_selection() {
     return lst_selection;
+  }
+
+  public ListView getlst_fuzzy() {
+    return lst_fuzzySearch;
   }
 
   public TextField getActiveText() {

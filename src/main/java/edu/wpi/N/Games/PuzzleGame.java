@@ -25,6 +25,7 @@ class MainFrame extends JFrame implements MouseListener, Runnable {
   boolean time_run = false;
   Thread th;
   ImagePanel sc;
+
   MainFrame() {
     init();
     start();
@@ -134,6 +135,7 @@ class ImagePanel extends JPanel implements MouseListener {
   Random ran_num = new Random();
   Vector rect_select = new Vector();
   SelectRect sr;
+
   ImagePanel() {
     this.addMouseListener(this);
   }
@@ -215,6 +217,7 @@ class ImagePanel extends JPanel implements MouseListener {
   }
 
   public void mouseClicked(MouseEvent e) {}
+
   public void mousePressed(MouseEvent e) {
     x = e.getX() / 80;
     y = e.getY() / 80;

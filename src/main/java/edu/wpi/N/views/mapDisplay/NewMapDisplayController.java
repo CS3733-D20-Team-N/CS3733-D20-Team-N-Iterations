@@ -387,23 +387,6 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
             });
   }
 
-  /** initiates a listener for the search button on a directory search */
-  public void initDetailSearchButton() {
-    detailSearchController
-        .getBtn_search()
-        .setOnMouseClicked(
-            e -> {
-              try {
-                initPathfind(
-                    (detailSearchController.getDBNodes())[0],
-                    (detailSearchController.getDBNodes())[1],
-                    detailSearchController.getTg_handicap());
-              } catch (IOException | DBException ex) {
-                ex.printStackTrace();
-              }
-            });
-  }
-
   /**
    * initiates a listener for the reset button on a location search
    *
@@ -452,16 +435,9 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
               }
               enableAllFloorButtons();
               setGoogleButtonDisable(true);
-              detailSearchController.getTxt_location().clear();
               detailSearchController.getLst_selection().getItems().clear();
-              detailSearchController.lst_fuzzySearch.getItems().clear();
-              // detailSearchController.getCmb_detail().getItems().clear();
-              detailSearchController.getHandicap().setSelected(false);
-              doctorSearchController.clearDbNodes();
-              mapBaseController.clearPath();
-              mainButtonList.animateList(false);
-              faulknerButtonList.animateList(false);
-              // resetTextualDirections();
+              detailSearchController.getlst_fuzzy().getItems().clear();
+              detailSearchController.getCmb_detail().getItems().clear();
               enableAllFloorButtons();
               try {
                 setDefaultKioskNode();
@@ -889,7 +865,6 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
       loader.setControllerFactory((obj) -> new MapDetailSearchController(this.singleton, this));
       Pane pane = loader.load();
       detailSearchController = loader.getController();
-      initDetailSearchButton();
       initResetDetailSearch();
       setDefaultKioskNode();
       pn_change.getChildren().add(pane);

@@ -113,7 +113,7 @@ public class DataEditorController implements Controller {
   @FXML
   public void onSelectDirectoryClicked(MouseEvent event) {
     FileChooser fc = new FileChooser();
-    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV Files", ".csv"));
+    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
     File selectedFile = fc.showOpenDialog(null);
     if (selectedFile != null) {
       lbl_filePath_detail.setText(selectedFile.getAbsolutePath());
