@@ -18,7 +18,7 @@
       </Label>
       <ListView fx:id="lst_selection" layoutX="24.0" layoutY="238.0" prefHeight="481.0" prefWidth="296.0" styleClass="list-cell" stylesheets="@../../css/newMapDisplay.css" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="235.0" />
       <JFXButton fx:id="btn_reset" layoutX="25.0" layoutY="735.0" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" stylesheets="@../../css/newMapDisplay.css" text="Reset" textFill="#e6ebf2" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="735.0" />
-      <JFXComboBox fx:id="cmb_detail" layoutX="76.0" layoutY="130.0" prefHeight="39.0" prefWidth="219.0" promptText="Search Options" />
+      <JFXComboBox fx:id="cmb_detail" layoutX="76.0" layoutY="130.0" prefHeight="39.0" prefWidth="219.0" promptText="Search Options" styleClass="jfx-combo-box" stylesheets="@../../css/sanitationRequestUI.css" />
       <ListView fx:id="lst_fuzzySearch" layoutX="35.0" layoutY="245.0" prefHeight="481.0" prefWidth="296.0" styleClass="list-cell" stylesheets="@../../css/newMapDisplay.css" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="235.0" />
       <ImageView fitHeight="50.0" fitWidth="49.0" layoutX="16.0" layoutY="125.0">
          <image>
