@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 import edu.wpi.N.App;
-import edu.wpi.N.algorithms.Level;
 import edu.wpi.N.database.DBException;
 import edu.wpi.N.database.DoctorDB;
 import edu.wpi.N.database.MapDB;
@@ -18,12 +17,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import lombok.SneakyThrows;
 
 public class MapDetailSearchController implements Controller {
 
