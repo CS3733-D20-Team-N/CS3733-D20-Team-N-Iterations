@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 import edu.wpi.N.App;
+import edu.wpi.N.algorithms.Level;
 import edu.wpi.N.database.DBException;
 import edu.wpi.N.database.DoctorDB;
 import edu.wpi.N.database.MapDB;
@@ -17,9 +18,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import lombok.SneakyThrows;
 
 public class MapDetailSearchController implements Controller {
 
@@ -68,6 +72,34 @@ public class MapDetailSearchController implements Controller {
       }
     }
   }
+  /*
+   private class DoctorClicked implements ChangeListener<String>{
+     public DoctorClicked(){}
+
+     @Override
+     public void changed(ObservableValue<? extends String> observable, String oldVal, String newVal) {
+       if(newVal != null){
+         try{
+           LinkedList<Doctor> docs = DoctorDB.getDoctorsByLocation(newVal);
+           LinkedList<String> docNames = new LinkedList<>();
+           for(Doctor d : docs){
+             docNames.add(d.getName());
+           }
+           ObservableList<String> doctors = FXCollections.observableList(docNames);
+           lst_selection.setItems(doctors);
+           lst_fuzzySearch.setVisible(false);
+           lst_fuzzySearch.setMouseTransparent(true);
+           lst_selection.setVisible(true);
+           lst_selection.setMouseTransparent(false);
+           lst_fuzzySearch.getSelectionModel().selectedItemProperty().removeListener(this);
+           cmb_detail.getSelectionModel().clearSelection();
+         } catch (DBException e) {
+           e.printStackTrace();
+         }
+       }
+     }
+   }
+  */
 
   private class AlphabetClicked implements ChangeListener<String> {
 
@@ -219,6 +251,42 @@ public class MapDetailSearchController implements Controller {
       e.printStackTrace();
     }
   }
+
+  /** An event handler for clicking on a cell. */
+  /*
+  private static class CellClicked implements EventHandler<MouseEvent> {
+    private MapDetailSearchController controller;
+    //private MapDetailSearchController.DirectionCell cell;
+
+    public CellClicked(MapDetailSearchController controller) {
+      super();
+      this.controller = controller;
+    }
+
+    @SneakyThrows
+    @Override
+    public void handle(MouseEvent mouseEvent) {
+
+        if(mouseEvent.getClickCount() == 2){
+          if(DoctorDB.getDoctorsByLocation(controller.lst_fuzzySearch.getSelectionModel().getSelectedItem().getNodeID()) != null)
+          {
+            controller.lst_selection
+                    .getSelectionModel()
+                    .selectedItemProperty()
+                    .removeListener(controller.deptHandler);
+            controller.lst_selection
+                    .getSelectionModel()
+                    .selectedItemProperty()
+                    .removeListener(controller.alphaHandler);
+            controller.lst_selection
+                    .getSelectionModel()
+                    .selectedItemProperty()
+                    .addListener(controller.buildHandler);
+            controller.lst_selection.getSelectionModel().selectedItemProperty().addListener(controller.doctorHandler);
+          }
+        }
+    }
+  }*/
 
   public void populateChangeDepartment() {
     try {
