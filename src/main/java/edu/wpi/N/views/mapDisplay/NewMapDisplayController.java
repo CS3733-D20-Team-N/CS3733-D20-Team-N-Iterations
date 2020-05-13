@@ -916,17 +916,12 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
     initResetLocationSearch();
     initRestroomSearchButton();
     setDefaultKioskNode();
-    locationSearchController.nodes[0] = node;
+    locationSearchController.nodes[1] = node;
     LinkedList<DbNode> nlist = new LinkedList<DbNode>();
     nlist.add(node);
     mapBaseController.setFloor(node.getBuilding(), node.getFloor(), null);
-    // TODO: can change location
-    if (locationSearchController.txt_firstLocation.getText() != null) {
-      locationSearchController.txt_secondLocation.setText(
-          node.getLongName() + "," + node.getBuilding());
-    } else
-      locationSearchController.txt_firstLocation.setText(
-          node.getLongName() + "," + node.getBuilding());
+    locationSearchController.txt_secondLocation.setText(
+        node.getLongName() + ", " + node.getBuilding());
     Label label = new Label();
     label.setTextAlignment(TextAlignment.CENTER);
     label.setAlignment(Pos.CENTER);
