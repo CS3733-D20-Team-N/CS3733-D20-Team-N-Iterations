@@ -5,11 +5,9 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 import edu.wpi.N.App;
 import edu.wpi.N.database.DBException;
-import edu.wpi.N.database.DoctorDB;
 import edu.wpi.N.database.MapDB;
 import edu.wpi.N.entities.DbNode;
 import edu.wpi.N.entities.States.StateSingleton;
-import edu.wpi.N.entities.employees.Doctor;
 import edu.wpi.N.views.Controller;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -68,34 +66,6 @@ public class MapDetailSearchController implements Controller {
       }
     }
   }
-  /*
-   private class DoctorClicked implements ChangeListener<String>{
-     public DoctorClicked(){}
-
-     @Override
-     public void changed(ObservableValue<? extends String> observable, String oldVal, String newVal) {
-       if(newVal != null){
-         try{
-           LinkedList<Doctor> docs = DoctorDB.getDoctorsByLocation(newVal);
-           LinkedList<String> docNames = new LinkedList<>();
-           for(Doctor d : docs){
-             docNames.add(d.getName());
-           }
-           ObservableList<String> doctors = FXCollections.observableList(docNames);
-           lst_selection.setItems(doctors);
-           lst_fuzzySearch.setVisible(false);
-           lst_fuzzySearch.setMouseTransparent(true);
-           lst_selection.setVisible(true);
-           lst_selection.setMouseTransparent(false);
-           lst_fuzzySearch.getSelectionModel().selectedItemProperty().removeListener(this);
-           cmb_detail.getSelectionModel().clearSelection();
-         } catch (DBException e) {
-           e.printStackTrace();
-         }
-       }
-     }
-   }
-  */
 
   private class AlphabetClicked implements ChangeListener<String> {
 
@@ -227,62 +197,6 @@ public class MapDetailSearchController implements Controller {
     lst_selection.getSelectionModel().clearSelection();
     NewMapDisplayController.fuzzyLocationSearch(activeText, lst_fuzzySearch);
   }
-
-  public void onSearchDoctorReverse() {
-    try {
-      LinkedList<Doctor> docs =
-          DoctorDB.getDoctorsByLocation(
-              lst_fuzzySearch.getSelectionModel().getSelectedItem().getNodeID());
-      LinkedList<String> docNames = null;
-      for (Doctor d : docs) {
-        docNames.add(d.getName());
-      }
-      ObservableList<String> result = FXCollections.observableList(docNames);
-      lst_selection.setItems(result);
-      lst_fuzzySearch.setVisible(false);
-      lst_fuzzySearch.setMouseTransparent(true);
-      lst_selection.setVisible(true);
-      lst_selection.setMouseTransparent(false);
-    } catch (DBException e) {
-      e.printStackTrace();
-    }
-  }
-
-  /** An event handler for clicking on a cell. */
-  /*
-  private static class CellClicked implements EventHandler<MouseEvent> {
-    private MapDetailSearchController controller;
-    //private MapDetailSearchController.DirectionCell cell;
-
-    public CellClicked(MapDetailSearchController controller) {
-      super();
-      this.controller = controller;
-    }
-
-    @SneakyThrows
-    @Override
-    public void handle(MouseEvent mouseEvent) {
-
-        if(mouseEvent.getClickCount() == 2){
-          if(DoctorDB.getDoctorsByLocation(controller.lst_fuzzySearch.getSelectionModel().getSelectedItem().getNodeID()) != null)
-          {
-            controller.lst_selection
-                    .getSelectionModel()
-                    .selectedItemProperty()
-                    .removeListener(controller.deptHandler);
-            controller.lst_selection
-                    .getSelectionModel()
-                    .selectedItemProperty()
-                    .removeListener(controller.alphaHandler);
-            controller.lst_selection
-                    .getSelectionModel()
-                    .selectedItemProperty()
-                    .addListener(controller.buildHandler);
-            controller.lst_selection.getSelectionModel().selectedItemProperty().addListener(controller.doctorHandler);
-          }
-        }
-    }
-  }*/
 
   public void populateChangeDepartment() {
     try {
