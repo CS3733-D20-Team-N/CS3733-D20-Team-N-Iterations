@@ -32,7 +32,7 @@ class GamePane2 extends JPanel {
     base.setOpaque(true);
     base.setBackground(Color.BLUE);
 
-    ImageIcon img = new ImageIcon("resources/edu/wpi/N/images/wong_sun.PNG");
+    ImageIcon img = new ImageIcon("edu/wpi/N/images/.jpg");
     target = new JLabel(img);
     target.setSize(img.getIconWidth(), img.getIconHeight());
 
