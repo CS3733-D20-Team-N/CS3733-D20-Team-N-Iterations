@@ -113,7 +113,11 @@ def codeCoverageExcludes = [
         'edu.wpi.N.algorithms.Direction',
         'edu.wpi.N.algorithms.Directions.State',
         'org.jnativehook.*',
-        'edu.wpi.N.App.*'
+        'edu.wpi.N.App.*',
+        'edu.wpi.N.games.*',
+        'edu.wpi.N.Games.*',
+        'edu.wpi.N.Music.*',
+        'edu.wpi.N.views.mapDisplay.MapDetailSearchController'
 ]
 
 jacoco {
