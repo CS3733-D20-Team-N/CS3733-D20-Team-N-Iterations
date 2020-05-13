@@ -4,10 +4,13 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXToggleButton;
 import edu.wpi.N.App;
+import edu.wpi.N.algorithms.Level;
 import edu.wpi.N.database.DBException;
+import edu.wpi.N.database.DoctorDB;
 import edu.wpi.N.database.MapDB;
 import edu.wpi.N.entities.DbNode;
 import edu.wpi.N.entities.States.StateSingleton;
+import edu.wpi.N.entities.employees.Doctor;
 import edu.wpi.N.views.Controller;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -15,9 +18,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import lombok.SneakyThrows;
 
 public class MapDetailSearchController implements Controller {
 
@@ -37,6 +43,7 @@ public class MapDetailSearchController implements Controller {
   private DepartmentClicked deptHandler = new DepartmentClicked();
   private BuildingClicked buildHandler = new BuildingClicked();
   private AlphabetClicked alphaHandler = new AlphabetClicked();
+  private DoctorClicked doctorHandler = new DoctorClicked();
 
   @Override
   public void setMainApp(App mainApp) {}
@@ -195,6 +202,24 @@ public class MapDetailSearchController implements Controller {
     activeText = (TextField) e.getSource();
     lst_selection.getSelectionModel().clearSelection();
     NewMapDisplayController.fuzzyLocationSearch(activeText, lst_fuzzySearch);
+  }
+
+  public void onSearchDoctorReverse(){
+    try{
+      LinkedList<Doctor> docs = DoctorDB.getDoctorsByLocation(lst_fuzzySearch.getSelectionModel().getSelectedItem().getNodeID());
+      LinkedList<String> docNames = null;
+      for(Doctor d : docs){
+        docNames.add(d.getName());
+      }
+      ObservableList<String> result = FXCollections.observableList(docNames);
+      lst_selection.setItems(result);
+      lst_fuzzySearch.setVisible(false);
+      lst_fuzzySearch.setMouseTransparent(true);
+      lst_selection.setVisible(true);
+      lst_selection.setMouseTransparent(false);
+    } catch (DBException e) {
+      e.printStackTrace();
+    }
   }
 
   public void populateChangeDepartment() {
