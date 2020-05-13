@@ -455,7 +455,6 @@ public class NewMapDisplayController extends QRGenerator implements Controller {
               detailSearchController.getLst_selection().getItems().clear();
               detailSearchController.getlst_fuzzy().getItems().clear();
               detailSearchController.getCmb_detail().getItems().clear();
-              enableAllFloorButtons();
               try {
                 setDefaultKioskNode();
               } catch (DBException ex) {
